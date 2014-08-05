@@ -45,9 +45,14 @@ message ServiceOption {
     PROTO = 1;
     JSON = 2;
   }
+
+  enum Transport {
+    HTTP = 1;
+    HTTPS = 2;
+  }
+
   /**
    * Defines the address of the communcations
-   * including the scheme and domain
    */
   optional string address = 1 [(fender.v1.fender_field).present = true];
 
@@ -55,6 +60,7 @@ message ServiceOption {
    * The format for the request when made over http
    */
   optional Format format = 2 [default = PROTO];
+  optional Transport transport = 3 [default=HTTPS];
 }
 
 message MethodOption {
@@ -98,6 +104,11 @@ message MethodOption {
    * when the response is complete
    */
   optional FieldIdentifier response_body_field = 4;
+
+  /**
+   * Specify a timeout in milliseconds
+   */
+  optional int32 timeout_millis = 5;
 }
 
 extend google.protobuf.FieldOptions {
