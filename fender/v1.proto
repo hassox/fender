@@ -1,0 +1,114 @@
+package fender.v1;
+
+option java_package = "com.fender.v1";
+
+import "google/protobuf/descriptor.proto";
+
+message FieldOption {
+  /**
+   * This field is required to be present
+   */
+  optional bool present = 1;
+  /**
+   * This field is required to be absent
+   */
+  optional bool absent = 2;
+
+  /**
+   * Specify a regex that should be run against the input
+   */
+  optional string format = 3;
+
+  /**
+   * The maximum length of a string type
+   */
+  optional int32 max_length = 4;
+
+  /**
+   * The minimum length of a string type
+   */
+  optional int32 min_length = 5;
+
+  /**
+   * The maximum value for a numerical value
+   */
+  optional int64 max = 6;
+
+  /**
+   * The minimum value for a numerical value
+   */
+  optional int64 min = 7;
+}
+
+message ServiceOption {
+  enum Format {
+    PROTO = 1;
+    JSON = 2;
+  }
+  /**
+   * Defines the address of the communcations
+   * including the scheme and domain
+   */
+  optional string address = 1 [(fender.v1.fender_field).present = true];
+
+  /**
+   * The format for the request when made over http
+   */
+  optional Format format = 2 [default = PROTO];
+}
+
+message MethodOption {
+
+  message FieldIdentifier {
+    optional string name = 1;
+    optional string package = 2;
+  }
+
+  /**
+   * HTTP methods
+   */
+  enum Method {
+    GET = 1;
+    POST = 2;
+    PUT = 3;
+    PATCH = 4;
+    DELETE = 5;
+    OPTIONS = 6;
+    HEAD = 7;
+    TRACE = 8;
+  }
+  /**
+   * The http method to use
+   */
+  optional Method method = 1 [default = POST];
+
+  /**
+   * A string in the RFC 6570 style http://tools.ietf.org/html/rfc6570
+   */
+  optional string path = 2 [(fender.v1.fender_field).present = true];
+
+  /**
+   * If present, represents the body field that will be the 
+   * body of the request
+   */
+  optional FieldIdentifier request_body_field = 3;
+
+  /**
+   * If present, represents field the body will be placed into 
+   * when the response is complete
+   */
+  optional FieldIdentifier response_body_field = 4;
+}
+
+extend google.protobuf.FieldOptions {
+  optional FieldOption fender_field = 133333;
+}
+
+
+extend google.protobuf.ServiceOptions {
+  optional ServiceOption fender_service = 133333;
+}
+
+extend google.protobuf.MethodOptions {
+  optional MethodOption fender_method = 133333;
+}

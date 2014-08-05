@@ -1,0 +1,14 @@
+{
+  "name": "fender",
+  "version": "0.1.0",
+  "description": "A set of extensions to describe HTTP clients via protocol buffers",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "Daniel Neighman <has.sox@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "protob": "0.4.2-browser8"
+  }
+}
