@@ -112,14 +112,17 @@ message MethodOption {
 }
 
 extend google.protobuf.FieldOptions {
-  optional FieldOption fender_field = 133333;
+  // These field numbers have been provided by protobuf-global-extension-registry@google.com
+  optional FieldOption fender_field = 1015;
 }
 
 
 extend google.protobuf.ServiceOptions {
-  optional ServiceOption fender_service = 133333;
+  // These field numbers have been provided by protobuf-global-extension-registry@google.com
+  optional ServiceOption fender_service = 1015;
 }
 
 extend google.protobuf.MethodOptions {
-  optional MethodOption fender_method = 133333;
+  // These field numbers have been provided by protobuf-global-extension-registry@google.com
+  optional MethodOption fender_method = 1015;
 }
