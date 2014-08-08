@@ -9,6 +9,7 @@
   "author": "Daniel Neighman <has.sox@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "protob": "0.4.2-browser8"
+    "protob": "0.4.2-browser8",
+    "uri-templates": "*"
   }
 }
