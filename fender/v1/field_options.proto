@@ -1,0 +1,47 @@
+package fender.v1;
+
+option java_package = "com.fender.v1";
+
+import "google/protobuf/descriptor.proto";
+
+message FieldOption {
+  /**
+   * This field is required to be present
+   */
+  optional bool present = 1;
+  /**
+   * This field is required to be absent
+   */
+  optional bool absent = 2;
+
+  /**
+   * Specify a regex that should be run against the input
+   */
+  optional string format = 3;
+
+  /**
+   * The maximum length of a string type
+   */
+  optional int32 max_length = 4;
+
+  /**
+   * The minimum length of a string type
+   */
+  optional int32 min_length = 5;
+
+  /**
+   * The maximum value for a numerical value
+   */
+  optional int64 max = 6;
+
+  /**
+   * The minimum value for a numerical value
+   */
+  optional int64 min = 7;
+}
+
+
+extend google.protobuf.FieldOptions {
+  // These field numbers have been provided by protobuf-global-extension-registry@google.com
+  optional FieldOption fender_field = 1015;
+}

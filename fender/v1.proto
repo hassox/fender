@@ -3,98 +3,8 @@ package fender.v1;
 option java_package = "com.fender.v1";
 
 import "google/protobuf/descriptor.proto";
-
-enum ValidationErrorType {
-  /** Corresponds to a failure of present check */
-  NOT_PRESENT = 1;
-  /** Corresponds to a failure of absent check */
-  IS_PRESENT = 2;
-  /** Corresponds to a failure of format check */
-  INVALID_FORMAT = 3;
-  /** Corresponds to a failure of max_length check */
-  TOO_LONG = 4;
-  /** Corresponds to a failure of min_length check */
-  TOO_SHORT = 5; 
-  /** Corresponds to a failure of max check */
-  OVER_MAX = 6;
-  /** Corresponds to a failure of min check */
-  UNDER_MIN = 7;
-}
-
-message FieldOption {
-  /**
-   * This field is required to be present
-   */
-  optional bool present = 1;
-  /**
-   * This field is required to be absent
-   */
-  optional bool absent = 2;
-
-  /**
-   * Specify a regex that should be run against the input
-   */
-  optional string format = 3;
-
-  /**
-   * The maximum length of a string type
-   */
-  optional int32 max_length = 4;
-
-  /**
-   * The minimum length of a string type
-   */
-  optional int32 min_length = 5;
-
-  /**
-   * The maximum value for a numerical value
-   */
-  optional int64 max = 6;
-
-  /**
-   * The minimum value for a numerical value
-   */
-  optional int64 min = 7;
-}
-
-message ValidationResult {
-  /**
-   * Validations for a given field
-   */
-  message FieldValidation {
-    /**
-     * The field identifier for the field that has the errors
-     */
-    optional FieldIdentifier field = 1;
-
-    /**
-     * An array of error messages for the given field that had errors
-     */
-    repeated ValidationErrorType error_types = 2;
-
-    /**
-     * If the field type is a message, this array contains the results of any nested messages
-     */
-    repeated ValidationResult nested_results = 3;
-
-  }
-
-  /**
-   * True if all validations passed successfully
-   */
-  optional bool valid = 1;
-
-  /**
-   * An array of errors that were found. This will be empty if valid
-   */
-  repeated FieldValidation errors = 2;
-}
-
-message FieldIdentifier {
-  optional string name = 1;
-  optional string package = 2;
-}
-
+import "fender/v1/field_options.proto";
+import "fender/v1/validations.proto";
 
 message ServiceOption {
   enum Format {
@@ -115,12 +25,11 @@ message ServiceOption {
   /**
    * The format for the request when made over http
    */
-  optional Format format = 2 [default = PROTO];
+  optional Format request_format = 2 [default = PROTO];
   optional Transport transport = 3 [default=HTTPS];
 }
 
 message MethodOption {
-
   /**
    * HTTP methods
    */
@@ -137,12 +46,12 @@ message MethodOption {
   /**
    * The http method to use
    */
-  optional Method method = 1 [default = POST];
+  optional Method http_method = 1 [default = POST];
 
   /**
    * A string in the RFC 6570 style http://tools.ietf.org/html/rfc6570
    */
-  optional string path = 2 [(fender.v1.fender_field).present = true];
+  optional string http_path = 2 [default = "/{fullServiceName}/{methodName}", (fender.v1.fender_field).present = true];
 
   /**
    * If present, represents the body field that will be the 
@@ -161,12 +70,6 @@ message MethodOption {
    */
   optional int32 timeout_millis = 5;
 }
-
-extend google.protobuf.FieldOptions {
-  // These field numbers have been provided by protobuf-global-extension-registry@google.com
-  optional FieldOption fender_field = 1015;
-}
-
 
 extend google.protobuf.ServiceOptions {
   // These field numbers have been provided by protobuf-global-extension-registry@google.com

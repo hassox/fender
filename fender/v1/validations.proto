@@ -1,0 +1,62 @@
+package fender.v1;
+
+option java_package = "com.fender.v1";
+
+import "google/protobuf/descriptor.proto";
+import "fender/v1/field_options.proto";
+
+enum ValidationErrorType {
+  /** Corresponds to a failure of present check */
+  NOT_PRESENT = 1;
+  /** Corresponds to a failure of absent check */
+  IS_PRESENT = 2;
+  /** Corresponds to a failure of format check */
+  INVALID_FORMAT = 3;
+  /** Corresponds to a failure of max_length check */
+  TOO_LONG = 4;
+  /** Corresponds to a failure of min_length check */
+  TOO_SHORT = 5; 
+  /** Corresponds to a failure of max check */
+  OVER_MAX = 6;
+  /** Corresponds to a failure of min check */
+  UNDER_MIN = 7;
+}
+
+message ValidationResult {
+  /**
+   * Validations for a given field
+   */
+  message FieldValidation {
+    /**
+     * The field identifier for the field that has the errors
+     */
+    optional FieldIdentifier field = 1;
+
+    /**
+     * An array of error messages for the given field that had errors
+     */
+    repeated ValidationErrorType error_types = 2;
+
+    /**
+     * If the field type is a message, this array contains the results of any nested messages
+     */
+    repeated ValidationResult nested_results = 3;
+
+  }
+
+  /**
+   * True if all validations passed successfully
+   */
+  optional bool valid = 1;
+
+  /**
+   * An array of errors that were found. This will be empty if valid
+   */
+  repeated FieldValidation errors = 2;
+}
+
+message FieldIdentifier {
+  optional string name = 1;
+  optional string package = 2;
+}
+

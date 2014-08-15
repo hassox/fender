@@ -22,14 +22,14 @@ my/service.proto
     service TheService {
       option (fender.v1.fender_service) = {
         address: "example.com",
-        format: JSON,
+        request_format: JSON,
         transport: HTTPS
       };
 
       rpc GetMe (Request) returns (Response) {
         option (fender.v1.fender_method) = {
-          method: GET,
-          path: "/me/{+id}",
+          http_method: GET,
+          http_path: "/me/{+id}",
           timeout_millis: 3000
         }
       }
