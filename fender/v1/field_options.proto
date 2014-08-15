@@ -38,6 +38,11 @@ message FieldOption {
    * The minimum value for a numerical value
    */
   optional int64 min = 7;
+
+  /**
+   * Redact this message from log messages
+   */
+  optional bool redacted = 8;
 }
 
 
