@@ -51,3 +51,17 @@ Other options on method are:
 * `request_body_field` - takes a field from the request object and makes that the body of the request
 * `response_body_field` - Takes the response body, and sets a particular field rather than constructing the message from the raw response. For example, when an API returns an array.
 
+
+## Dependencies
+
+Fender requires the google protocol buffer descriptors. If you don't already have them in your proto files you can add a protos.json file with the following:
+  
+    [
+      {
+        "git": "https://github.com/hassox/google-protos.git"
+      },
+      {
+        "git": "https://github.com/hassox/fender.git"
+      }
+    ]
+
