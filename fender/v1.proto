@@ -69,6 +69,12 @@ message MethodOption {
    * Specify a timeout in milliseconds
    */
   optional int32 timeout_millis = 5;
+
+  /**
+   * Force normal query requests (head, get, delete) to use the
+   * params as the body
+   */
+  optional bool force_body_request = 6;
 }
 
 extend google.protobuf.ServiceOptions {
