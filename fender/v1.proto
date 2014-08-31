@@ -27,6 +27,8 @@ message ServiceOption {
    */
   optional Format request_format = 2 [default = PROTO];
   optional Transport transport = 3 [default=HTTPS];
+
+  optional bool cors_enabled = 4 [ default=false ];
 }
 
 message MethodOption {
