@@ -92,12 +92,12 @@ message MethodOption {
   /**
    * Maps fields from a request object into a request header
    */
-  optional HttpFieldAsHeader request_header_field = 7;
+  repeated HttpFieldAsHeader request_header_fields = 7;
 
   /**
    * Maps fields from a response header into the response object
    */
-  optional HttpFieldAsHeader response_header_field = 8;
+  repeated HttpFieldAsHeader response_header_fields = 8;
 
   /**
   * When using a body request (POST, PUT etc), causes any attributes that are not mapped as body, header or path fields are included in the query string
