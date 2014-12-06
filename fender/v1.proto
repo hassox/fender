@@ -59,6 +59,9 @@ message MethodOption {
 
     /** Identify the field that should be set or used as the header field. */
     optional FieldIdentifier field = 2 [(fender.v1.fender_field).present = true];
+
+    /** Allows for header fields to be encoded */
+    optional HeaderFieldFormat format = 10 [default=STRING];
   }
 
   /**
@@ -109,7 +112,6 @@ message MethodOption {
   */
   optional bool http_query_extra_params = 9;
 
-  optional HeaderFieldFormat format = 10 [default=STRING];
 }
 
 extend google.protobuf.ServiceOptions {
