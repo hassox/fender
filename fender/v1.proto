@@ -47,6 +47,11 @@ message MethodOption {
   }
 
   message HttpFieldAsHeader {
+    message HeaderFieldFormat {
+      STRING = 1;
+      JSON = 2;
+    }
+
     /** The name of the header field to use.
     * Http header fields must be case insensitive
     */
@@ -103,6 +108,8 @@ message MethodOption {
   * When using a body request (POST, PUT etc), causes any attributes that are not mapped as body, header or path fields are included in the query string
   */
   optional bool http_query_extra_params = 9;
+
+  optional HeaderFieldFormat format = 10 [default=STRING];
 }
 
 extend google.protobuf.ServiceOptions {
