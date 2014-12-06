@@ -45,6 +45,17 @@ message MethodOption {
     HEAD = 7;
     TRACE = 8;
   }
+
+  message HttpFieldAsHeader {
+    /** The name of the header field to use.
+    * Http header fields must be case insensitive
+    */
+    optional string header_name = 1 [(fender.v1.fender_field).present = true];
+
+    /** Identify the field that should be set or used as the header field. */
+    optional FieldIdentifier field = 2 [(fender.v1.fender_field).present = true];
+  }
+
   /**
    * The http method to use
    */
@@ -53,7 +64,7 @@ message MethodOption {
   /**
    * A string in the RFC 6570 style http://tools.ietf.org/html/rfc6570
    */
-  optional string http_path = 2 [default = "/{fullServiceName}/{methodName}", (fender.v1.fender_field).present = true];
+  optional string http_path = 2 [default = "/services/{+fullServiceName}/{+methodName}", (fender.v1.fender_field).present = true];
 
   /**
    * If present, represents the body field that will be the 
@@ -77,6 +88,21 @@ message MethodOption {
    * params as the body
    */
   optional bool force_body_request = 6;
+
+  /**
+   * Maps fields from a request object into a request header
+   */
+  optional HttpFieldAsHeader request_header_field = 7;
+
+  /**
+   * Maps fields from a response header into the response object
+   */
+  optional HttpFieldAsHeader response_header_field = 8;
+
+  /**
+  * When using a body request (POST, PUT etc), causes any attributes that are not mapped as body, header or path fields are included in the query string
+  */
+  optional bool http_query_extra_params = 9;
 }
 
 extend google.protobuf.ServiceOptions {
