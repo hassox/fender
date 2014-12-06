@@ -47,7 +47,7 @@ message MethodOption {
   }
 
   message HttpFieldAsHeader {
-    message HeaderFieldFormat {
+    enum HeaderFieldFormat {
       STRING = 1;
       JSON = 2;
     }
