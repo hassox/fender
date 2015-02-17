@@ -2,7 +2,6 @@ package fender.v1;
 
 option java_package = "com.fender.v1";
 
-import "google/protobuf/descriptor.proto";
 import "fender/v1/field_options.proto";
 
 enum ValidationErrorType {
